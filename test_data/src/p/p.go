@@ -1,27 +1,17 @@
 package p
 
-func notPrintfFuncAtAll() {}
+func notPrintfFuncAtAll() {
+	funcWithEllipsis("123123")
+	func3()
+	mastFirst()
+}
 
 func funcWithEllipsis(args ...interface{}) {}
 
-func printfLikeButWithStrings(format string, args ...string) {}
+func func3() {
 
-func printfLikeButWithBadFormat(format int, args ...interface{}) {}
-
-func prinfLikeFunc(format string, args ...interface{}) {} // want "printf-like formatting function"
-
-func prinfLikeFuncWithReturnValue(format string, args ...interface{}) string { // want "printf-like formatting function"
-	return ""
-}
-func secondArgIsNotEllipsis(arg1 string, arg2 int) {}
-
-func printfLikeButWithExtraInterfaceMethods(format string, args ...interface {
-	String() string
-}) {
 }
 
-func prinfLikeFuncf(format string, args ...interface{}) {}
+func mastFirst() {
 
-func prinfLikeFuncWithExtraArgs1(extraArg, format string, args ...interface{}) {} // want "printf-like formatting function"
-
-func prinfLikeFuncWithExtraArgs2(extraArg int, format string, args ...interface{}) {} // want "printf-like formatting function"
+}
