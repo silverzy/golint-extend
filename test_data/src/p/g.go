@@ -1,17 +1,26 @@
 package p
 
 func notPrintfFuncAtAll1() {
-	funcWithEllipsis1("123123")
-	func31()
-	mastFirst1()
+	o := orm{}
+	o.Update()
+	o.Where()
 }
 
-func funcWithEllipsis1(args ...interface{}) {}
-
-func func31() {
-
+type orm struct {
 }
 
-func mastFirst1() {
+func (o orm) Update() orm {
+	return o
+}
 
+func (o orm) Delete() orm {
+	return o
+}
+
+func (o orm) Save() orm {
+	return o
+}
+
+func (o orm) Where() orm {
+	return o
 }
