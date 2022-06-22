@@ -34,8 +34,20 @@ func run(pass *analysis.Pass) (interface{}, error) {
 		hasCallWhere := false
 		var WherePos token.Pos
 		for _, body := range callExpr.Body.List {
-			call2 := body.(*ast.ExprStmt).X.(*ast.CallExpr)
-			fmt.Println(call2.Fun.(*ast.Ident).Name, call2.Pos())
+			if _, ok := body.(*ast.ExprStmt); !ok {
+				continue
+			}
+			if call2, ok := body.(*ast.ExprStmt).X.(*ast.CallExpr); ok {
+				switch node := call2.Fun.(type) {
+				case *ast.SelectorExpr:
+					iterator(&node.X, &hasCallWhere, &WherePos, pass)
+					if node.Sel != nil {
+						isIdent(node.Sel, &hasCallWhere, &WherePos, pass)
+					}
+				case *ast.Ident:
+					isIdent(node, &hasCallWhere, &WherePos, pass)
+				}
+			}
 		}
 		return true
 	})

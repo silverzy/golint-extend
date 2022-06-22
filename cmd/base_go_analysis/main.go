@@ -4,32 +4,34 @@ import "fmt"
 
 func main() {
 	//singlechecker.Main(analyzer.Analyzer)
-	fmt.Println(lengthOfLongestSubstring("aabaab!bb"))
+	fmt.Println(longestPalindrome("aabaab!bb"))
 }
-func lengthOfLongestSubstring(s string) int {
-	lindex := 0
+func longestPalindrome(s string) string {
+	dp := make([][]bool, len(s))
+	initDP(dp, len(s), s)
+	maxlength := 0
+	lIndex := 0
 	rIndex := 0
-	sMap := make(map[string]bool)
-	max := 0
-	for ; rIndex < len(s); rIndex++ {
-		if !sMap[string(s[rIndex])] {
-			sMap[string(s[rIndex])] = true
-		} else {
-			if len(sMap) > max {
-				max = len(sMap)
-			}
-			for ; lindex <= rIndex; lindex++ {
-				delete(sMap, string(s[lindex]))
-				if !sMap[string(s[rIndex])] {
-					sMap[string(s[rIndex])] = true
-					lindex++
-					break
-				}
+	for length := 2; length < len(s); length++ {
+		for i := 0; i < len(s)-length; i++ {
+			isTrue := dp[i+1][i+length-1] && s[i] == s[i+length]
+			dp[i][i+length] = isTrue
+			if isTrue && length > maxlength {
+				maxlength = length
+				lIndex = i
+				rIndex = i + length
 			}
 		}
 	}
-	if len(sMap) > max {
-		max = len(sMap)
+	return s[lIndex : rIndex+1]
+}
+
+func initDP(dp [][]bool, length int, s string) {
+	for i := 0; i < length; i++ {
+		dp[i] = make([]bool, length)
+		dp[i][i] = true
+		if i+1 < length {
+			dp[i][i+1] = s[i] == s[i+1]
+		}
 	}
-	return max
 }
